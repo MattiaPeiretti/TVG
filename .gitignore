@@ -1,0 +1,9 @@
+#Keepin' those python virtual env files off those sweet github serverss :D
+
+Venv folders
+/Include
+/Lib
+/Scripts
+
+pyvenv.cfg
+
