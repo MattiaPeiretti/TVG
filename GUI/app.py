@@ -1,6 +1,18 @@
 import os
+
+from settingsHandler import SettingsHandler
+SETTINGS_FILE_PATH = "../settings.json"
+settingsHandler = SettingsHandler()
+settingsHandler.load_settings_file(SETTINGS_FILE_PATH)
+
 from routes import router
 from flask import Flask
+
+
+
+# Preparing Dependencies
+
+
 
 def create_app(test_config=None):
     # create and configure the app

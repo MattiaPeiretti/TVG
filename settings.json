@@ -1,0 +1,46 @@
+{
+    "sections": [
+        {
+        "sectionName": "Webcam Extender",
+        "sectionSettings": [
+            {
+                "title": "Example setting",
+                "type": "select",
+                "options": [
+                    "optionA",
+                    "optionB",
+                    "optionC"
+                ],
+                "default": "1",
+                "description": "This is just a test setting for the parser"
+            },
+            {
+                "title": "Example setting",
+                "type": "select",
+                "options": [
+                    "optionA",
+                    "optionB",
+                    "optionC"
+                ],
+                "default": "1",
+                "description": "This is just a test setting for the parser"
+            }
+        ]
+    },
+    {
+        "sectionName": "Webcam Extender",
+        "sectionSettings": [
+            {
+                "title": "Example setting",
+                "type": "select",
+                "options": [
+                    "optionA",
+                    "optionB",
+                    "optionC"
+                ],
+                "default": "1",
+                "description": "This is just a test setting for the parser"
+            }
+        ]
+    }]
+}

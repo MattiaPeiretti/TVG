@@ -12,18 +12,29 @@ Settings
     <div class="row">
         <div class="col-lg-3"></div>
         <div class="col-lg-6">
+
+            <!-- Settings form -->
             <form action="/settings" method="POST">
-                {% for section in settings %}
+
+                {% for section in settings %} <!-- Populate with all the sections -->
+
                 <section>
+                    <!-- Section title -->
                     <h2>{{ section.sectionName }}</h2>
+
+                    <!-- Section settings -->
                     {% for setting in section.sectionSettings %}
+                        <!-- Setting -->
                         <div class="setting form-group">
+                            <!-- Setting title -->
+                            <strong><span>{{ setting.title }}</span></strong>
 
-                            <strong>
-                                <span>{{ setting.title }}</span>
-                            </strong>
-                            <p>{{ setting.description }}</p>
+                            <!-- Setting Description -->
+                            {% if setting.description%}
+                                <p>{{ setting.description }}</p>
+                            {% endif %}
 
+                            <!-- Setting Widget -->
                             {% if setting.type == "select" %}
 
                             <select class="form-control">
@@ -41,14 +52,16 @@ Settings
 
                             {% elif setting.type == "number" %} 
                                 <input type="number" id={{setting.title.replace(" ", "") }} name={{ setting.title.replace(" ", "") }} min={{setting.min}} max={{ setting.max }} value={{setting.default}}>
-
                             {% endif %}
+
                         </div>
                     {% endfor %}
                 </section>
                 {% endfor %}
                 <input class=" btn btn-primary" type="submit" value="Apply Settings and Reload">
             </form>
+
+
         </div>
         <div class="col-lg-3"></div>
     </div>
