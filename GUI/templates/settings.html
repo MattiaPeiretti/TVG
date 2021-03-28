@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}
+Settings
+{% endblock %}
+{% block content %}
+<style>
+    select {
+        max-width: 30rem;
+    }
+</style>
+<div class="containter p-3">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <form action="/settings" method="POST">
+                {% for section in settings %}
+                <section>
+                    <h2>{{ section.sectionName }}</h2>
+                    {% for setting in section.sectionSettings %}
+                        <div class="setting form-group">
+
+                            <strong>
+                                <span>{{ setting.title }}</span>
+                            </strong>
+                            <p>{{ setting.description }}</p>
+
+                            {% if setting.type == "select" %}
+
+                            <select class="form-control">
+                                {% for option in setting.options %}
+                                <option value={{ option }} {{ "selected" if setting.default==option else "" }}>{{ option }}
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            {% elif setting.type == "checkbox" %}
+
+                            <input class="" type="checkbox" name={{
+                                setting.title.replace(" ", "") }} value={{ setting.title.replace(" ", "") }} {{ setting.default }}>
+                            <label class=" form-check-label" for={{ setting.title.replace(" ", "") }}>{{ setting.option }}</label>
+
+                            {% elif setting.type == "number" %} 
+                                <input type="number" id={{setting.title.replace(" ", "") }} name={{ setting.title.replace(" ", "") }} min={{setting.min}} max={{ setting.max }} value={{setting.default}}>
+
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </section>
+                {% endfor %}
+                <input class=" btn btn-primary" type="submit" value="Apply Settings and Reload">
+            </form>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+</div>
+{% endblock %}
