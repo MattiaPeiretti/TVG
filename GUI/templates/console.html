@@ -1,18 +1,20 @@
 {% extends "layout.html" %}
 {% block title %} Console {% endblock %}
 {% block content %}
+
 <div class="container" style="margin-top: 10px;">
     <div class="row">
         <div class="col-lg-8 p-3">
             <div class="card-fluid" style="">
                 <div class="card-body">
                     <h5 class="card-title">Watcher's Realtime Video Feed</h5>
-                    <div class="videoStream"
-                        style="height: 0px; width: 100%!important; padding-bottom: 56%; background-color: black">
+                    <img class="feed" src="" style="width: 100%;">
+                    <div class="feedPlaceholder" style="height: 0; padding-bottom: 56.6%; background-color: gray; width: 100%;">
 
                     </div>
                     <div class="buttons p-3">
                         <button type="button" class="btn btn-primary">Pause</button>
+                        <button type="button" class="btn btn-primary override-stream">Override video stream</button>
                         <button type="button" class="btn btn-danger">Start Recording</button>
                         <button type="button" class="btn btn-info">Info</button>
                     </div>
@@ -68,4 +70,30 @@
         </div>
     </div>
 </div>
+<script>
+    const videoFeed = "/video_feed"
+
+    let requestVideoButton = document.querySelector(".override-stream")
+    let feed = document.querySelector('.feed')
+    let videoPlaceholder = document.querySelector('.feedPlaceholder')
+
+    requestVideoButton.addEventListener("click", ()=>{
+        if (feed.style.display === "block") {
+            feed.src = "";
+            videoPlaceholder.style.display = "block";
+            feed.style.display = "none";
+            requestVideoButton.innerHTML = "Override video stream";
+        } else {
+            feed.src = videoFeed;
+            feed.style.display = "block";
+            videoPlaceholder.style.display = "none";
+            requestVideoButton.innerHTML = "Cease video stream";
+        }
+    });
+</script>
+<style>
+    .feed {
+        display: none;
+    }
+</style>
 {% endblock %}

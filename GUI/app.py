@@ -42,4 +42,5 @@ def create_app(test_config=None):
     return app
 
 app = create_app()
-app.run(debug=True);
+
+app.run(host= '0.0.0.0', debug=True);
