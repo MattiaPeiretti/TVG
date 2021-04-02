@@ -39,7 +39,11 @@ Settings
 
                             <select class="form-control">
                                 {% for option in setting.options %}
-                                <option value={{ option }} {{ "selected" if setting.default==option else "" }}>{{ option }}
+                                {% if setting.default==option %}
+                                <option value={{option}} selected>{{ option }}
+                                {% else %}
+                                <option value={{option}}>{{ option }}
+                                {% endif %}
                                 </option>
                                 {% endfor %}
                             </select>
