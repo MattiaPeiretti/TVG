@@ -1,11 +1,5 @@
 import os
-
-from settingsHandler import SettingsHandler
-SETTINGS_FILE_PATH = "../settingsTemplate.json"
-settingsHandler = SettingsHandler()
-settingsHandler.load_settings_file(SETTINGS_FILE_PATH)
-
-from routes import router
+from .routes import router
 from flask import Flask
 
 # Preparing Dependencies
@@ -17,8 +11,6 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         TESTING=True,
     )
-
-    app.debug = True
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -33,10 +25,8 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    app.register_blueprint(router)
+    app.register_blueprint(router)                                  # Adding blueprint
 
     return app
 
 app = create_app()
-
-app.run( debug=True);

@@ -1,6 +1,6 @@
 import flask
-from settingsHandler import SettingsHandler
-from videoGrabber.camera import VideoCamera
+from project.settingsHandler import SettingsHandler
+from project.visionGrabber.device import Device
 
 settings_handler = SettingsHandler()
 
@@ -16,14 +16,16 @@ def settings_route():
     
     return flask.render_template("settings.html", settings=settings_data)
 
+@router.route('/video_feed')
+def video_feed():
+    return flask.Response(gen(Device()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+#TODO: Restructure in appropriate file
 def gen(camera):
     while True:
         #get camera frame
         frame = camera.get_frame()
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
 			bytearray(frame) + b'\r\n')
-
-@router.route('/video_feed')
-def video_feed():
-    return flask.Response(gen(VideoCamera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
