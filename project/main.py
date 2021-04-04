@@ -1,3 +1,7 @@
+# Setting python path
+import os, sys
+sys.path.insert(0, os.path.abspath(".."))
+
 from project.settingsHandler import SettingsHandler
 import project.GUI.GUIServer as GUI
 

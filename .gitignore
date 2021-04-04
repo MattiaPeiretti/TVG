@@ -4,6 +4,9 @@
 /Include
 /Lib
 /Scripts
+/lib64
+/bin
+/lib
 
 #Other folders
 __pycache__/
