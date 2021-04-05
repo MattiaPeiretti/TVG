@@ -10,6 +10,20 @@
 </head>
 
 <body>
+    <style>
+        .notification-container {
+            min-width: 200px;
+            z-index: 9999;
+            height: auto;
+            position: absolute; 
+            right: 0;
+            bottom: 0;
+            margin: 15px;
+            display: none;
+        }
+
+    </style>
+
     <!-- As a link -->
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="/pilot-console">Telescope Virtual Guider</a>
@@ -27,6 +41,31 @@
         <div id="content">{% block content %}{% endblock %}</div>
     </section>
 
+    <section>
+        <div class="notification-container">
+            <div class="alert alert-success" role="alert">
+                <span id="notification-msg">This is a test</span>
+              </div>
+        </div>
+    </section>
+
+    <script>
+        function notify(msg, delay = 5000) {
+            // Get elements
+            let notificationContainer = document.querySelector(".notification-container");
+            let msgElement = document.getElementById("notification-msg");
+
+            // Update alert
+            msgElement.innerHTML = msg;
+            notificationContainer.style.display = "block";
+            
+            // Hide alert again after delay (default 5 seconds)
+            setTimeout(() => {
+                notificationContainer.style.display = "none";
+            }, delay)
+        }
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -36,6 +75,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    
 </body>
 
 </html>
