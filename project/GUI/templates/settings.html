@@ -124,10 +124,11 @@ Settings
 <script>
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(function() {
-        console.log('Async: Copying to clipboard was successful!');
+            notify(`Code: ${text} successfully copied to clipboard!!`);
         }, function(err) {
-        console.error('Async: Could not copy text: ', err);
+            notify(`Async: Could not copy text: ${err}`);
         });
+        
     }
 </script>
 {% endblock %}
