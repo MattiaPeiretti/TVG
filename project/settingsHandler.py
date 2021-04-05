@@ -26,12 +26,16 @@ class SettingsHandler(object):
             SettingsHandler.__instance = object.__new__(cls)                                # if so returning the already
         return SettingsHandler.__instance                                                   # inirialized instance..
 
-    def __init__(self,):
+    def __init__(self):
         self.save_file_path = ''
 
     def load_settings_file(self, file):
-        self.settings_raw = load_json(file, "Settigns file not found at:")   #Loading settigs dict from file
+        self.settings_raw = load_json(file, "Settings file not found at:")                  #Loading settigs dict from file
         self.save_file_path = file
+        self.parse_settings()
+
+    def reload_settings(self):
+        self.settings_raw = load_json(self.save_file_path, "Settings file not found at:")   #Loading settigs dict from file
         self.parse_settings()
 
     def parse_settings(self):
