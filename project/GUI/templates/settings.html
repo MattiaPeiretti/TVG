@@ -51,7 +51,7 @@ Settings
                             {% elif setting.type == "checkbox" %}
 
                             <input class="" type="checkbox" name={{
-                                setting.title.replace(" ", "") }} value={{ setting.title.replace(" ", "") }} {{ setting.default }}>
+                                setting.title.replace(" ", "") }} value={{ setting.title.replace(" ", "") }} {{ "checked" if setting.default }}>
                             <label class=" form-check-label" for={{ setting.title.replace(" ", "") }}>{{ setting.option }}</label>
 
                             {% elif setting.type == "number" %} 
@@ -63,8 +63,11 @@ Settings
                 </section>
                 {% endfor %}
                 <input class=" btn btn-primary" type="submit" value="Apply Settings and Reload">
+                
             </form>
-
+            <form action="/reload-settings" method="post">
+                <button class=" btn btn-primary" name="forwardBtn" type="submit">Reload Settings</button>
+            </form>
 
         </div>
         <div class="col-lg-3"></div>

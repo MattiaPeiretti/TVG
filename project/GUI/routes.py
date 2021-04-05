@@ -21,6 +21,10 @@ def video_feed():
     return flask.Response(gen(Device()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@router.route("/reload-settings", methods=['POST'])
+def reload_settings():
+    settings_handler.reload_settings()
+    return flask.redirect("/settings")
 
 #TODO: Restructure in appropriate file
 def gen(camera):
@@ -29,3 +33,4 @@ def gen(camera):
         frame = camera.get_frame()
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
 			bytearray(frame) + b'\r\n')
+
