@@ -1,0 +1,18 @@
+{
+    "sections": [
+        {
+            "sectionName": "Video Device Settings",
+            "sectionSettings": [
+                {
+                    "title": "Video Device",
+                    "id":"VIDEODEVICE_DEVICE_ID",
+                    "type": "number",
+                    "min": 0,
+                    "max": 1,
+                    "default": 0,
+                    "description": "The video device that will be used to grab the video feed. Default is 0, in no other devices are connected to the system."
+                }
+            ]
+        }
+    ]
+}
