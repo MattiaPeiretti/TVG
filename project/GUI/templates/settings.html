@@ -35,8 +35,8 @@ Settings
 </style>
 <div class="containter p-3">
     <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
             <div  style="display: flex; align-items: center; justify-content: space-between; ">
                 <h1>Settings</h1>
                 <form action="/reload-settings" method="post" style="margin: 0!important;">
@@ -48,11 +48,18 @@ Settings
             
          <hr>
         </div>
-        <div class="col-lg-3"></div>
+        <div class="col-lg-2"></div>
         
     </div>
     <div class="row">
-        <div class="col-lg-3"></div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-2">
+            <ul style="list-style-type: none; margin: 0; padding: 0; position: sticky;">
+                {% for section in settings %} 
+                    <li><a href={{"#"+section.sectionName.replace(" ", "-").upper()}}>{{section.sectionName}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
         <div class="col-lg-6">
             <!-- Settings form -->
             <form action="/settings" method="POST">
@@ -61,7 +68,7 @@ Settings
 
                 <section>
                     <!-- Section title -->
-                    <h2>
+                    <h2 id={{section.sectionName.replace(" ", "-").upper()}}>
                         {{ section.sectionName }}
                     </h2>
 
@@ -115,8 +122,6 @@ Settings
             </form>
             
 
-        </div>
-        <div class="col-lg-1">
         </div>
         <div class="col-lg-2"></div>
     </div>
