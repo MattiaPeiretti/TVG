@@ -24,22 +24,41 @@ class SettingsHandler(object):
     def __new__(cls, *args, **kwargs):                                                      # Checking upon initialization that the class 
         if not SettingsHandler.__instance:                                                  # hasn't already been initialized
             SettingsHandler.__instance = object.__new__(cls)                                # if so returning the already
-        return SettingsHandler.__instance                                                   # inirialized instance..
+        return SettingsHandler.__instance                                                   # initialized instance..
 
     def __init__(self):
-        self.save_file_path = ''
+        self.settings_template = {}
+        self.settings_template_filepath = ""
 
-    def load_settings_file(self, file):
-        self.settings_raw = load_json(file, "Settings file not found at:")                  #Loading settigs dict from file
-        self.save_file_path = file
-        self.parse_settings()
+        self.settings_data = {}
+        self.settings_data_filepath = ""
 
-    def reload_settings(self):
-        self.settings_raw = load_json(self.save_file_path, "Settings file not found at:")   #Loading settigs dict from file
-        self.parse_settings()
+    # Settings UI
 
-    def parse_settings(self):
-        self.parsed_data = self.settings_raw['sections']                                    #Select only specific settings data
+    def load_settings_template_file(self, file):
+        self.settings_template = load_json(file, "Settings template file not found at:")    #Loading settings dict from file
+        self.settings_template_filepath = file
         
-    def get_json_settings_data(self):
-        return self.parsed_data
+    def reload_settings_template(self):
+        self.settings_template = load_json(self.settings_template_filepath,
+         "Settings file not found at:")                                                     #Loading settings dict from file
+        
+    def get_settings_template(self):
+        return self.settings_template['sections']
+
+    # Settings Data
+
+    def load_settings_data(self, file):
+        self.settings_data = load_json(file, "Settings template file not found at:")
+        self.settings_data_filepath = file
+
+    def reload_settings_data(self):
+        self.settings_data = load_json(self.settings_data_filepath, 
+                                        "Settings template file not found at:")
+
+    def get_setting(self, setting):
+        pass
+
+    def set_setting(self, setting, value):
+        pass
+

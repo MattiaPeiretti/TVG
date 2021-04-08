@@ -12,7 +12,7 @@ def console_route():
 
 @router.route("/settings")
 def settings_route():
-    settings_data = settings_handler.get_json_settings_data()
+    settings_data = settings_handler.get_settings_template()
     
     return flask.render_template("settings.html", settings=settings_data)
 
@@ -23,7 +23,7 @@ def video_feed():
 
 @router.route("/reload-settings", methods=['POST'])
 def reload_settings():
-    settings_handler.reload_settings()
+    settings_handler.reload_settings_template()
     return flask.redirect("/settings")
 
 #TODO: Restructure in appropriate file
