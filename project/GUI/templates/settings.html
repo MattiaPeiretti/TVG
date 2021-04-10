@@ -8,7 +8,8 @@ Settings
         max-width: 30rem;
     }
 
-    .no-button-styles, .no-button-styles:focus {
+    .no-button-styles,
+    .no-button-styles:focus {
         background: none;
         color: inherit;
         border: none;
@@ -26,10 +27,11 @@ Settings
         display: none;
     }
 
-    .settings-title{
+    .settings-title {
         cursor: pointer;
     }
-    .settings-title:hover > .copy-setting-id {
+
+    .settings-title:hover>.copy-setting-id {
         display: block;
     }
 </style>
@@ -37,26 +39,32 @@ Settings
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
-            <div  style="display: flex; align-items: center; justify-content: space-between; ">
+            <div style="display: flex; align-items: center; justify-content: space-between; ">
                 <h1>Settings</h1>
                 <form action="/reload-settings" method="post" style="margin: 0!important;">
-                    <button title="Reload the settings file and update screen." class="no-button-styles" name="forwardBtn" type="submit" style=>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M.01 0h24v24h-24V0z" fill="none"/><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                    <button title="Reload the settings file and update screen." class="no-button-styles"
+                        name="forwardBtn" type="submit" style=>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                            fill="#000000">
+                            <path d="M.01 0h24v24h-24V0z" fill="none" />
+                            <path
+                                d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z" />
+                        </svg>
                     </button>
                 </form>
             </div>
-            
-         <hr>
+
+            <hr>
         </div>
         <div class="col-lg-2"></div>
-        
+
     </div>
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-2">
             <ul style="list-style-type: none; margin: 0; padding: 0; position: sticky;">
-                {% for section in settings %} 
-                    <li><a href={{"#"+section.sectionName.replace(" ", "-").upper()}}>{{section.sectionName}}</a></li>
+                {% for section in settings %}
+                <li><a href={{"#"+section.sectionName.replace(" ", " -").upper()}}>{{section.sectionName}}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -64,63 +72,74 @@ Settings
             <!-- Settings form -->
             <form action="/settings" method="POST">
 
-                {% for section in settings %} <!-- Populate with all the sections -->
+                {% for section in settings %}
+                <!-- Populate with all the sections -->
 
                 <section>
                     <!-- Section title -->
-                    <h2 id={{section.sectionName.replace(" ", "-").upper()}}>
+                    <h2 id={{section.sectionName.replace(" ", " -").upper()}}>
                         {{ section.sectionName }}
                     </h2>
 
                     <!-- Section settings -->
                     {% for setting in section.sectionSettings %}
-                        <!-- Setting -->
-                        <div class="setting form-group">
-                            <!-- Setting title -->
-                            <strong><span class="settings-title">
-                                <p onclick="copyToClipboard( '{{ setting.id }}' )" class="copy-setting-id" title="Copy settings id name">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                    {%
+                    set element_name = setting.id + "-element"
+                    %}
+                    <!-- Setting -->
+                    <div class="setting form-group">
+                        <!-- Setting title -->
+                        <strong><span class="settings-title">
+                                <p onclick="copyToClipboard( '{{ setting.id }}' )" class="copy-setting-id"
+                                    title="Copy settings id name">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                        width="24px" fill="#000000">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path
+                                            d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+                                    </svg>
                                 </p>
                                 {{ setting.title }}
                             </span></strong>
 
-                            <!-- Setting Description -->
-                            {% if setting.description%}
-                                <p>{{ setting.description }}</p>
-                            {% endif %}
+                        <!-- Setting Description -->
+                        {% if setting.description%}
+                        <p>{{ setting.description }}</p>
+                        {% endif %}
 
-                            <!-- Setting Widget -->
-                            {% if setting.type == "select" %}
+                        <!-- Setting Widget -->
+                        {% if setting.type == "select" %}
 
-                            <select class="form-control">
-                                {% for option in setting.options %}
-                                {% if setting.default==option %}
-                                <option value={{option}} selected>{{ option }}
+                        <select class="form-control" id={{element_name}} name={{setting.id}}>
+                            {% for option in setting.options %}
+                            {% if setting.default==option %}
+                            <option value={{option}} selected>{{ option }}
                                 {% else %}
-                                <option value={{option}}>{{ option }}
+                            <option value={{option}}>{{ option }}
                                 {% endif %}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            </option>
+                            {% endfor %}
+                        </select>
 
-                            {% elif setting.type == "checkbox" %}
+                        {% elif setting.type == "checkbox" %}
 
-                            <input class="" type="checkbox" name={{
-                                setting.title.replace(" ", "") }} value={{ setting.title.replace(" ", "") }} {{ "checked" if setting.default }}>
-                            <label class=" form-check-label" for={{ setting.title.replace(" ", "") }}>{{ setting.option }}</label>
+                        <input class="" id={{element_name}} type="checkbox" name={{setting.id}} {{ "checked" if
+                            setting.default }}>
+                        <label class="form-check-label" for={{setting.id}}>{{ setting.option }}</label>
 
-                            {% elif setting.type == "number" %} 
-                                <input type="number" id={{setting.title.replace(" ", "") }} name={{ setting.title.replace(" ", "") }} min={{setting.min}} max={{ setting.max }} value={{setting.default}}>
-                            {% endif %}
+                        {% elif setting.type == "number" %}
+                        <input type="number" id={{element_name}} name={{setting.id}} min={{setting.min}} max={{
+                            setting.max }} value={{setting.default}}>
+                        {% endif %}
 
-                        </div>
+                    </div>
                     {% endfor %}
                 </section>
                 {% endfor %}
                 <input class=" btn btn-primary" type="submit" value="Apply Settings and Reload">
-                
+
             </form>
-            
+
 
         </div>
         <div class="col-lg-2"></div>
@@ -128,12 +147,12 @@ Settings
 </div>
 <script>
     function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(function() {
+        navigator.clipboard.writeText(text).then(function () {
             notify(`Code: ${text} successfully copied to clipboard!!`);
-        }, function(err) {
+        }, function (err) {
             notify(`Async: Could not copy text: ${err}`);
         });
-        
+
     }
 </script>
 {% endblock %}
