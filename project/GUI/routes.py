@@ -22,12 +22,11 @@ def settings_route():
         for key, value in new_settings_data.items():
             print(key, value)
             settings_handler.set_setting(key, value)
-        
     
-
-    settings_data_val = settings_handler.get_settings_template()
+    settings_template = settings_handler.get_settings_template()
+    settings_data = settings_handler.get_settings_data()
     
-    return flask.render_template("settings.html", settings=settings_data_val)
+    return flask.render_template("settings.html", settings_template=settings_template, settings_data=settings_data)
 
 
 @router.route("/reload-settings", methods=['POST'])

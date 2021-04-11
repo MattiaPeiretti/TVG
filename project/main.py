@@ -1,3 +1,11 @@
+# ---------------------------------------------------------------------
+# MAIN
+# The code in this file takes care of initializing all of the needed 
+# systems in order to make the software work...
+#
+# Written by Mattia Peiretti on 03/2021, https://mattiapeiretti.com
+# ---------------------------------------------------------------------
+
 # Setting python path
 import os, sys
 sys.path.insert(0, os.path.abspath(".."))

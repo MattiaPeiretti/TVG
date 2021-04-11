@@ -63,7 +63,7 @@ Settings
         <div class="col-lg-2"></div>
         <div class="col-lg-2">
             <ul style="list-style-type: none; margin: 0; padding: 0; position: sticky;">
-                {% for section in settings %}
+                {% for section in settings_template %}
                 <li><a href={{"#"+section.sectionName.replace(" ", " -").upper()}}>{{section.sectionName}}</a></li>
                 {% endfor %}
             </ul>
@@ -72,7 +72,7 @@ Settings
             <!-- Settings form -->
             <form action="/settings" method="POST">
 
-                {% for section in settings %}
+                {% for section in settings_template %}
                 <!-- Populate with all the sections -->
 
                 <section>
@@ -112,7 +112,9 @@ Settings
 
                         <select class="form-control" id={{element_name}} name={{setting.id}}>
                             {% for option in setting.options %}
-                            {% if setting.default==option %}
+                            {% if settings_data[setting.id] == option %}
+                            <option value={{option}} selected>{{ option }}
+                                {% elif setting.default==option and settings_data[setting.id] == ""%}
                             <option value={{option}} selected>{{ option }}
                                 {% else %}
                             <option value={{option}}>{{ option }}
@@ -129,7 +131,7 @@ Settings
 
                         {% elif setting.type == "number" %}
                         <input type="number" id={{element_name}} name={{setting.id}} min={{setting.min}} max={{
-                            setting.max }} value={{setting.default}}>
+                            setting.max }} value={{settings_data[setting.id] or setting.default}}>
                         {% endif %}
 
                     </div>
