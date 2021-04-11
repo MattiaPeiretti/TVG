@@ -48,17 +48,28 @@ class SettingsHandler(object):
 
     # Settings Data
 
-    def load_settings_data(self, file):
+    def load_settings_data_file(self, file):
         self.settings_data = load_json(file, "Settings template file not found at:")
         self.settings_data_filepath = file
+        print(self.settings_data)
 
     def reload_settings_data(self):
         self.settings_data = load_json(self.settings_data_filepath, 
                                         "Settings template file not found at:")
+        
+    def security_check(self):
+        if self.settings_data_filepath == '':
+            raise Exception("Settings Data file not initialized...")
 
     def get_setting(self, setting):
-        pass
+        if setting in self.settings_data:
+            return self.settings_data[setting]
+        raise Exception(f"Could not find ${setting} setting")
 
-    def set_setting(self, setting, value):
-        pass
-
+    def set_setting(self, setting, value, automatic_write=True):
+        if setting in self.settings_data:
+            self.settings_data[setting] = value
+            #TODO: Implement writing to file imediately
+            return
+        raise Exception(f"Could not find ${setting} setting")
+        

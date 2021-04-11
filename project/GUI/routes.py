@@ -10,16 +10,25 @@ router = flask.Blueprint("pilot-console", __name__, "/pilot-console")           
 def console_route():
     return flask.render_template("console.html")
 
-@router.route("/settings")
-def settings_route():
-    settings_data = settings_handler.get_settings_template()
-    
-    return flask.render_template("settings.html", settings=settings_data)
-
 @router.route('/video_feed')
 def video_feed():
     return flask.Response(gen(Device()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@router.route("/settings", methods=["GET", "POST"])
+def settings_route():
+    if flask.request.method == "POST":
+        new_settings_data = flask.request.form
+        for key, value in new_settings_data.items():
+            print(key, value)
+            settings_handler.set_setting(key, value)
+        
+    
+
+    settings_data_val = settings_handler.get_settings_template()
+    
+    return flask.render_template("settings.html", settings=settings_data_val)
+
 
 @router.route("/reload-settings", methods=['POST'])
 def reload_settings():

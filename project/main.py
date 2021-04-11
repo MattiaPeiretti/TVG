@@ -10,9 +10,13 @@ GUI_DEBUG = True
 
 
 # Initializing up the settingsHandler
+settings_handler = SettingsHandler()
 
-SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsTemplate.json")  # Settings data
-SettingsHandler().load_settings_template_file(SETTINGS_FILE_PATH)                        # Loading data
+SETTINGS_TEMPLATE_FILE_PATH = os.path.abspath("../data/settings/settingsTemplate.json")  # Settings data
+settings_handler.load_settings_template_file(SETTINGS_TEMPLATE_FILE_PATH)                        # Loading data
+
+SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")  # Settings data
+settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                        # Loading data
 
 # Starting the GUI server
 
