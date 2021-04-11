@@ -17,7 +17,7 @@ def load_json(file_path, custom_error="JSON file not found at: "):
     with open(file_path) as data_file:                                                      # Open json file
             json_dict = json.load(data_file)                                                # Load json data
 
-    return json_dict 
+    return json_dict
 
 def write_json(file_path, data,custom_error="JSON file could not been written at: "):
     if not os.path.exists(file_path):                                                       # Checking whether the file exists

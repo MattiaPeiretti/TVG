@@ -12,13 +12,14 @@ import cv2
 from project.settingsHandler import SettingsHandler
 import project.baseConfig as base_config
 
-
+settings_handler = SettingsHandler()
 class Device(object):
     def __init__(self):
         #capturing video
         # self.video_device = cv2.VideoCapture(base_config.DEFAULT_DEVICE_ID or SettingsHandler().get_setting("DEVEICE_ID"))
         #TODO: Implement settings handler device setting
-        self.video_device = cv2.VideoCapture(1)
+        print(settings_handler.get_setting('VIDEODEVICE_DEVICE_ID'))
+        self.video_device = cv2.VideoCapture(int(settings_handler.get_setting('VIDEODEVICE_DEVICE_ID')))
 
     def __del__(self):
         #releasing camera

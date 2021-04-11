@@ -1,6 +1,7 @@
 import os
 from .routes import router
 from flask import Flask
+import flask.logging as Flask_logging
 
 # Preparing Dependencies
 
@@ -11,6 +12,8 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         TESTING=True,
     )
+
+    app.logger.removeHandler(Flask_logging.default_handler)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
