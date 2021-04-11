@@ -25,6 +25,10 @@ The GPIO librafy for python will be used to handle the mount.
 - [ ] Add dynamic settings limits feature
 - [ ] Add feature to save configurations
 
+### Logging
+- [ ] Implement logging
+- [ ] Show logs in the UI
+
 ### Vision
 - [ ] Create webcam init routine
 - [x] Stream and conver stream to a api endpoint
