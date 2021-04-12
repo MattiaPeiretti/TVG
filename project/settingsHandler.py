@@ -7,6 +7,10 @@
 
 import json
 import os
+import logging
+
+logger = logging.getLogger("SettingsHandler")
+
 
 ERROR_NOT_INITALIZED_PROPERLY_MGS = "Error: SettingsHandler not initialized properly!"
 
@@ -16,7 +20,7 @@ def load_json(file_path, custom_error="JSON file not found at: "):
 
     with open(file_path) as data_file:                                                      # Open json file
             json_dict = json.load(data_file)                                                # Load json data
-
+    logging.debug("TEST FROM SETTINGS")
     return json_dict
 
 def write_json(file_path, data,custom_error="JSON file could not been written at: "):
@@ -25,6 +29,7 @@ def write_json(file_path, data,custom_error="JSON file could not been written at
 
     with open(file_path, "w") as data_file:                                                      # Opening datafile
         json.dump(data, data_file)                                                          # Writing JSON to file
+
 class SettingsHandler(object):
     __instance = None                                                                       # Instance shared varaible
 

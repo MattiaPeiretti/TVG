@@ -8,21 +8,24 @@
 
 import os 
 import sys
-from project.settingsHandler import SettingsHandler
 import project.GUI.GUIServer as GUI
 import logging, logging.config
+
+from project.settingsHandler import SettingsHandler
+from project.customLogger import CustomFormatter
 
 # Setting python path
 sys.path.insert(0, os.path.abspath(".."))
 
 # Quick Settings
 GUI_DEBUG = True
+LOG_LEVEL = ("DEBUG" if GUI_DEBUG else "INFO")
 
 # Setting up logger
 logging.config.dictConfig({
     'version': 1,
     'formatters': {'default': {
-        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        "()": CustomFormatter,                                                              # Adding custom formatter for the logs (to add colors)
     }},
     'handlers': {'wsgi': {
         'class': 'logging.StreamHandler',
@@ -30,26 +33,23 @@ logging.config.dictConfig({
         'formatter': 'default'
     }},
     'root': {
-        'level': 'INFO',
+        'level': LOG_LEVEL,                                                                 # Setting log level... ...To debug if GUI_DEBUG
         'handlers': ['wsgi']
     }
 })
 
-logger = logging.getLogger("main_logger")
-
-
 # Initializing the settingsHandler
 settings_handler = SettingsHandler()
 
-SETTINGS_TEMPLATE_FILE_PATH = os.path.abspath("../data/settings/settingsTemplate.json")  # Settings data
-settings_handler.load_settings_template_file(SETTINGS_TEMPLATE_FILE_PATH)                        # Loading data
+SETTINGS_TEMPLATE_FILE_PATH = os.path.abspath("../data/settings/settingsTemplate.json")     # Settings data
+settings_handler.load_settings_template_file(SETTINGS_TEMPLATE_FILE_PATH)                   # Loading data
 
-SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")  # Settings data
-settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                        # Loading data
+SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")                  # Settings data
+settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                                # Loading data
 
 # Starting the GUI server
 
-GUI.app.run(debug=GUI_DEBUG);                                                   # Running the GUI server
+GUI.app.run(debug=GUI_DEBUG);                                                               # Running the GUI server
 
 
 
