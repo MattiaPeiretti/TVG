@@ -38,6 +38,8 @@ logging.config.dictConfig({
     }
 })
 
+logging.info("Logger initialized successfully")
+
 # Initializing the settingsHandler
 settings_handler = SettingsHandler()
 
@@ -48,9 +50,8 @@ SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")      
 settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                                # Loading data
 
 # Starting the GUI server
-
 GUI.app.run(debug=GUI_DEBUG);                                                               # Running the GUI server
-
+logging.info("Launched GUI instance")
 
 
 

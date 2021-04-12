@@ -27,7 +27,7 @@ The GPIO librafy for python will be used to handle the mount.
 
 ### Logging
 - [x] Get logger working
-- [ ] Implement logging
+- [x] Implement logging
 - [ ] Show logs in the UI
 
 ### Vision

@@ -3,7 +3,7 @@
 # The code in this file takes care of setting up the logger 
 # that the system uses to log globally...
 #
-# Written by Mattia Peiretti on 03/2021, https://mattiapeiretti.com
+# Written by Mattia Peiretti on 04/2021, https://mattiapeiretti.com
 # ---------------------------------------------------------------------
 
 import logging

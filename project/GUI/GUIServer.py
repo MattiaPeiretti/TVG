@@ -1,6 +1,15 @@
+# ---------------------------------------------------------------------
+# GUI Server
+# The code in this file takes care of creating a flask app instance,
+# to host in and to load the all of the routes
+#
+# Written by Mattia Peiretti on 04/2021, https://mattiapeiretti.com
+# ---------------------------------------------------------------------
+
 import os
-from .routes import router
 from flask import Flask
+import logging
+from .routes import router
 import flask.logging as Flask_logging
 
 # Preparing Dependencies
@@ -33,3 +42,4 @@ def create_app(test_config=None):
     return app
 
 app = create_app()
+logging.debug("Created GUI instance")

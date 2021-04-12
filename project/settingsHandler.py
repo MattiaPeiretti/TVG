@@ -2,15 +2,12 @@
 # SETTINGS HANDLER
 # This class takes care of handling and writing the global settings.
 #
-# Written by Mattia Peiretti on 03/2021, https://mattiapeiretti.com
+# Written by Mattia Peiretti on 04/2021, https://mattiapeiretti.com
 # ---------------------------------------------------------------------
 
 import json
 import os
 import logging
-
-logger = logging.getLogger("SettingsHandler")
-
 
 ERROR_NOT_INITALIZED_PROPERLY_MGS = "Error: SettingsHandler not initialized properly!"
 
@@ -20,14 +17,14 @@ def load_json(file_path, custom_error="JSON file not found at: "):
 
     with open(file_path) as data_file:                                                      # Open json file
             json_dict = json.load(data_file)                                                # Load json data
-    logging.debug("TEST FROM SETTINGS")
+    logging.debug(f"Loading json file: {file_path}")
     return json_dict
 
 def write_json(file_path, data,custom_error="JSON file could not been written at: "):
     if not os.path.exists(file_path):                                                       # Checking whether the file exists
         raise ValueError("{} {}".format(custom_error, file_path))                           # Throwing error and returning
 
-    with open(file_path, "w") as data_file:                                                      # Opening datafile
+    with open(file_path, "w") as data_file:                                                 # Opening datafile
         json.dump(data, data_file)                                                          # Writing JSON to file
 
 class SettingsHandler(object):
@@ -51,11 +48,13 @@ class SettingsHandler(object):
     def load_settings_template_file(self, file):
         self.settings_template = load_json(file, "Settings template file not found at:")    # Loading settings dict from file
         self.settings_template_filepath = file
+        logging.debug("Successfully loaded template data")
         
     def reload_settings_template(self):
         self.settings_template = load_json(self.settings_template_filepath,
          "Settings file not found at:")                                                     # Loading settings dict from file
-        
+        logging.debug("Reloaded settings template")
+
     def get_settings_template(self):
         if self.settings_template:
             return self.settings_template['sections']
@@ -71,10 +70,12 @@ class SettingsHandler(object):
     def load_settings_data_file(self, file):                                                    
         self.settings_data = load_json(file, "Settings template file not found at:")        # Loading JSON data
         self.settings_data_filepath = file
+        logging.debug("Successfully loaded data")
 
     def reload_settings_data(self):
         self.settings_data = load_json(self.settings_data_filepath, "Settings template file not found at:")
-        
+        logging.debug("Successfully reloaded data")
+
     def security_check(self):
         if self.settings_data_filepath == '':
             raise Exception("Settings Data file not initialized...")
@@ -89,6 +90,7 @@ class SettingsHandler(object):
             self.settings_data[setting] = value
             if automatic_write:
                 write_json(self.settings_data_filepath, self.settings_data)
+                logging.debug(f"Setting {setting} with value {value} written to file")
             return
         raise Exception(f"Could not find ${setting} setting")
         

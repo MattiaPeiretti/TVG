@@ -7,6 +7,7 @@
 
 # Libs
 import cv2
+import logging
 
 # Modules
 from project.settingsHandler import SettingsHandler
@@ -18,12 +19,14 @@ class Device(object):
         #capturing video
         # self.video_device = cv2.VideoCapture(base_config.DEFAULT_DEVICE_ID or SettingsHandler().get_setting("DEVEICE_ID"))
         #TODO: Implement settings handler device setting
-        print(settings_handler.get_setting('VIDEODEVICE_DEVICE_ID'))
-        self.video_device = cv2.VideoCapture(int(settings_handler.get_setting('VIDEODEVICE_DEVICE_ID')))
+        self.video_device_index = int(settings_handler.get_setting('VIDEODEVICE_DEVICE_ID'))
+        self.video_device = cv2.VideoCapture(self.video_device_index)
+        logging.info(f"Initialized Vision Device at index {self.video_device_index}")
 
     def __del__(self):
         #releasing camera
         self.video_device.release()
+        logging.info(f"Destructed Vision Device at index {self.video_device_index}")
 
     def get_frame(self):
        #extracting frames

@@ -20,7 +20,6 @@ def settings_route():
     if flask.request.method == "POST":
         new_settings_data = flask.request.form
         for key, value in new_settings_data.items():
-            print(key, value)
             settings_handler.set_setting(key, value)
     
     settings_template = settings_handler.get_settings_template()
