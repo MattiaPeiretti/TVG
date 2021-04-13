@@ -31,10 +31,17 @@ logging.config.dictConfig({
         'class': 'logging.StreamHandler',
         'stream': 'ext://flask.logging.wsgi_errors_stream',
         'formatter': 'default'
-    }},
+    }, 
+    "file":{  
+        "class": "logging.handlers.RotatingFileHandler",
+        "filename": "log.log",
+        "maxBytes" : 1024,
+        "backupCount" :0
+    }
+    },
     'root': {
         'level': LOG_LEVEL,                                                                 # Setting log level... ...To debug if GUI_DEBUG
-        'handlers': ['wsgi']
+        'handlers': ['wsgi', "file"]
     }
 })
 
@@ -50,7 +57,8 @@ SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")      
 settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                                # Loading data
 
 # Starting the GUI server
-GUI.app.run(debug=GUI_DEBUG);                                                               # Running the GUI server
+#GUI.app.run(debug=GUI_DEBUG);                                                               # Running the GUI server
+GUI.runGUI();                                                                               # Running the GUI server
 logging.info("Launched GUI instance")
 
 
