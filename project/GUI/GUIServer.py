@@ -7,12 +7,11 @@
 # ---------------------------------------------------------------------
 
 import os
-from flask import Flask
 import logging
-from .routes import router
 import flask.logging as Flask_logging
 
-# Preparing Dependencies
+from .routes import router
+from flask import Flask
 
 def create_app(test_config=None):
     # create and configure the app
@@ -43,3 +42,6 @@ def create_app(test_config=None):
 
 app = create_app()
 logging.debug("Created GUI instance")
+
+def runGUI():
+    app.run(port=5000, debug=True)
