@@ -1,4 +1,7 @@
 import flask
+import subprocess
+import time
+import logging
 from project.settingsHandler import SettingsHandler
 from project.visionGrabber.device import Device
 
@@ -40,4 +43,20 @@ def gen(camera):
         frame = camera.get_frame()
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + 
 			bytearray(frame) + b'\r\n')
+
+# adjusted flask_logger
+def flask_logger():
+    """creates logging information"""
+    with open("log.log") as log_info:
+        for i in range(25):
+            data = log_info.read()
+            yield data.encode()
+            time.sleep(0.1)
+        # Create empty job.log, old logging will be deleted
+        #open("log.log", 'w').close()
+
+@router.route("/log_stream", methods=["GET"])
+def stream():
+    """returns logging information"""
+    return flask.Response(flask_logger(), mimetype="text/plain", content_type="text/event-stream")
 
