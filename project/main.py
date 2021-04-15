@@ -6,13 +6,15 @@
 # Written by Mattia Peiretti on 03/2021, https://mattiapeiretti.com
 # ---------------------------------------------------------------------
 
+# Libs
 import os 
 import sys
 import project.GUI.GUIServer as GUI
 import logging, logging.config
 
+# Modules
 from project.settingsHandler import SettingsHandler
-from project.customLogger import CustomFormatter
+import project.customFormatters as customFormatters
 
 # Setting python path
 sys.path.insert(0, os.path.abspath(".."))
@@ -21,26 +23,30 @@ sys.path.insert(0, os.path.abspath(".."))
 GUI_DEBUG = True
 LOG_LEVEL = ("DEBUG" if GUI_DEBUG else "INFO")
 
+
 # Setting up logger
 logging.config.dictConfig({
     'version': 1,
-    'formatters': {'default': {
-        "()": CustomFormatter,                                                              # Adding custom formatter for the logs (to add colors)
-    }},
+    'formatters': {
+        'default': { "()": customFormatters.WebConsoleFormatter },                                                                  # Adding custom formatter for the logs (to add colors)
+        "console": { "()": customFormatters.ConsoleFormatter}
+    },
     'handlers': {'wsgi': {
         'class': 'logging.StreamHandler',
         'stream': 'ext://flask.logging.wsgi_errors_stream',
-        'formatter': 'default'
+        'formatter': 'console'
     }, 
     "file":{  
-        "class": "logging.handlers.RotatingFileHandler",
+        "()": "logging.handlers.RotatingFileHandler",
+        "formatter": "default",
         "filename": "log.log",
         "maxBytes" : 1024,
-        "backupCount" :0
+        "backupCount" :0,
+        "encoding": "utf8",
     }
     },
     'root': {
-        'level': LOG_LEVEL,                                                                 # Setting log level... ...To debug if GUI_DEBUG
+        'level': LOG_LEVEL,                                                                     # Setting log level... ...To debug if GUI_DEBUG
         'handlers': ['wsgi', "file"]
     }
 })
@@ -50,15 +56,15 @@ logging.info("Logger initialized successfully")
 # Initializing the settingsHandler
 settings_handler = SettingsHandler()
 
-SETTINGS_TEMPLATE_FILE_PATH = os.path.abspath("../data/settings/settingsTemplate.json")     # Settings data
-settings_handler.load_settings_template_file(SETTINGS_TEMPLATE_FILE_PATH)                   # Loading data
+SETTINGS_TEMPLATE_FILE_PATH = os.path.abspath("../data/settings/settingsTemplate.json")         # Settings data
+settings_handler.load_settings_template_file(SETTINGS_TEMPLATE_FILE_PATH)                       # Loading data
 
-SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")                  # Settings data
-settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                                # Loading data
+SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")                      # Settings data
+settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                                    # Loading data
 
 # Starting the GUI server
-#GUI.app.run(debug=GUI_DEBUG);                                                               # Running the GUI server
-GUI.runGUI();                                                                               # Running the GUI server
+# GUI.app.run(debug=GUI_DEBUG);                                                                 # Running the GUI server
+GUI.build_and_run_GUI_server(5000, GUI_DEBUG);                                                  # Running the GUI server
 logging.info("Launched GUI instance")
 
 

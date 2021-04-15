@@ -8,7 +8,7 @@
 
 import logging
 
-class CustomFormatter(logging.Formatter):
+class ConsoleFormatter(logging.Formatter):
     """Logging Formatter to add colors and count warning / errors"""
 
     # Terminal Color codes
@@ -21,6 +21,33 @@ class CustomFormatter(logging.Formatter):
 
     # Format strings
     format = "%(asctime)s - %(levelname)s at [%(module)s] → %(message)s"
+
+    FORMATS = {
+        logging.DEBUG: green + format + reset,
+        logging.INFO: grey + format + reset,
+        logging.WARNING: yellow + format + reset,
+        logging.ERROR: red + format + reset,
+        logging.CRITICAL: bold_red + format + reset
+    }
+
+    def format(self, record):
+        log_fmt = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
+
+class WebConsoleFormatter(logging.Formatter):
+    """Logging Formatter to add colors and count warning / errors"""
+
+    #Terminal Color codes
+    green =     "<span style='color: green;'>"
+    grey =      "<span style='color: white;'>"
+    yellow =    "<span style='color: yellow;'>"
+    red =       "<span style='color: red;'>"
+    bold_red =  "<span style='color: red; font-weight: 800;'>"
+    reset = "</span><br />"
+
+    # Format strings
+    format = "%(asctime)s - %(levelname)s at [%(module)s]: %(message)s"
 
     FORMATS = {
         logging.DEBUG: green + format + reset,
