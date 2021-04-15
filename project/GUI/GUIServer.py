@@ -21,7 +21,7 @@ def create_app(test_config=None):
         TESTING=True,
     )
 
-    app.logger.removeHandler(Flask_logging.default_handler)
+    app.logger.removeHandler(Flask_logging.default_handler)                     # Removing Flask's default logger
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -36,12 +36,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    app.register_blueprint(router)                                  # Adding blueprint
+    app.register_blueprint(router)                                              # Adding blueprint
 
     return app
 
-app = create_app()
-logging.debug("Created GUI instance")
 
-def runGUI():
-    app.run(port=5000, debug=True)
+def build_and_run_GUI_server(port_, debug_):
+    app = create_app()
+    logging.debug("Created GUI server")
+    app.run(port=port_, debug=debug_)
+    logging.debug("GUI server running")
