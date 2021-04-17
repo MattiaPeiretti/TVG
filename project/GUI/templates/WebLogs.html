@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %} Web Logs {% endblock %}
+{% block content %}
+
+<script>
+    // setInterval(() => {
+    //     fetch('http://127.0.0.1:5000/log_stream')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             let console = document.getElementById("console");
+    //             console.innerHTML = data.data;
+    //             console.scrollTop = console.scrollHeight;
+    //         });
+    // }, 1000);
+
+    var socket = io.connect('http://127.0.0.1:5000');
+
+    socket.emit("get_message", { "": "" });
+
+    socket.on('logs', function (msg) {
+        console.log(msg);
+        let consoleElement = document.getElementById("console");
+        consoleElement.innerHTML = msg;
+        consoleElement.scrollTop = consoleElement.scrollHeight;
+    });
+
+</script>
+
+<style>
+    #console {
+        position: fixed;
+        top: 56px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow-y: scroll;
+        font-family: monospace, monospace;
+    }
+</style>
+
+<div id="console" style="background-color: black;">{{ logs | safe }}</div>
+
+{% endblock %}
