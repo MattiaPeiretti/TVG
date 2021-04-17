@@ -5,6 +5,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
     <title>{% block title %}{% endblock %} - TVG</title>
 </head>
@@ -15,13 +20,16 @@
             min-width: 200px;
             z-index: 9999;
             height: auto;
-            position: absolute; 
+            position: absolute;
             right: 0;
             bottom: 0;
             margin: 15px;
             display: none;
         }
 
+        nav {
+            z-index: 9999;
+        }
     </style>
 
     <!-- As a link -->
@@ -30,6 +38,9 @@
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link" href="/pilot-console">Console</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/web-console">Web Logs</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/settings">Settings</a>
@@ -45,7 +56,7 @@
         <div class="notification-container">
             <div class="alert alert-success" role="alert">
                 <span id="notification-msg">This is a test</span>
-              </div>
+            </div>
         </div>
     </section>
 
@@ -58,7 +69,7 @@
             // Update alert
             msgElement.innerHTML = msg;
             notificationContainer.style.display = "block";
-            
+
             // Hide alert again after delay (default 5 seconds)
             setTimeout(() => {
                 notificationContainer.style.display = "none";
@@ -76,7 +87,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-    
+
 </body>
 
 </html>
