@@ -30,7 +30,8 @@ The GPIO librafy for python will be used to handle the mount.
 - [x] Implement logging
 - [x] Create different formatter for file logger.
 - [x] Show logs in the UI
-- [ ] Implement logs with sockets
+- [x] Implement logs with sockets
+- [ ] Create independen log agent which emits sockets events with the logs data every second
 
 ### Vision
 - [ ] Create webcam init routine
