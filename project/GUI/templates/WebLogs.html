@@ -2,42 +2,99 @@
 {% block title %} Web Logs {% endblock %}
 {% block content %}
 
-<script>
-    // setInterval(() => {
-    //     fetch('http://127.0.0.1:5000/log_stream')
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             let console = document.getElementById("console");
-    //             console.innerHTML = data.data;
-    //             console.scrollTop = console.scrollHeight;
-    //         });
-    // }, 1000);
 
-    var socket = io.connect('http://127.0.0.1:5000');
-
-    socket.emit("get_message", { "": "" });
-
-    socket.on('logs', function (msg) {
-        console.log(msg);
-        let consoleElement = document.getElementById("console");
-        consoleElement.innerHTML = msg;
-        consoleElement.scrollTop = consoleElement.scrollHeight;
-    });
-
-</script>
 
 <style>
+    html,
+    body {
+        height: 100%;
+    }
+
     #console {
-        position: fixed;
-        top: 56px;
-        bottom: 0;
+        position: absolute;
+        top: 0;
+        bottom: 30px;
         left: 0;
         right: 0;
         overflow-y: scroll;
         font-family: monospace, monospace;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .data-bar {
+        position: absolute;
+        bottom: 0;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .data-bar span {
+        display: inline-block;
+        border-left: 4px solid green;
+        padding-left: 6px;
+        padding-right: 12px;
+    }
+
+    #webserver-status:before {
+        content: "WebLogger Server Status: ";
+    }
+
+    #last-update:before {
+        content: "Last queried the server: ";
+    }
+
+    .console-container {
+        position: relative;
+        min-height: calc(100% - 56px);
+        height: auto !important;
     }
 </style>
 
-<div id="console" style="background-color: black;">{{ logs | safe }}</div>
+<div class="console-container">
+    <div id="console" style="background-color: black;">{{ logs | safe }}</div>
+    <div class="data-bar">
+        <span id="webserver-status">
+            Loading...
+        </span>
+        <span id="last-update">
+            Loading...
+        </span>
+    </div>
+</div>
 
+<script>
+    let webServerStatusLabel = document.getElementById("webserver-status");
+
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://localhost:5002');
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+        console.log('Connected to the WS Server!')
+        webServerStatusLabel.innerHTML = "Connected.";
+    });
+
+    // Connection closed
+    socket.addEventListener('close', function (event) {
+        console.log('Disconnected from the WS Server!')
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+        let consoleElement = document.getElementById("console");
+        consoleElement.innerHTML = event.data;
+        consoleElement.scrollTop = consoleElement.scrollHeight;
+        console.log('Message from server ', event.data);
+    });
+
+    // Send a msg to the websocket
+    const sendMsg = () => {
+        socket.send('Hello from Client2!');
+    }
+
+</script>
 {% endblock %}
