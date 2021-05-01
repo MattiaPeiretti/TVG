@@ -39,12 +39,12 @@ class WebConsoleFormatter(logging.Formatter):
     """Logging Formatter to add colors and count warning / errors"""
 
     #Terminal Color codes
-    green =     "<span style='color: green;'>"
-    grey =      "<span style='color: white;'>"
-    yellow =    "<span style='color: yellow;'>"
-    red =       "<span style='color: red;'>"
-    bold_red =  "<span style='color: red; font-weight: 800;'>"
-    reset = "</span><br />"
+    green       = "<span style='color: green;'>"
+    grey        = "<span style='color: white;'>"
+    yellow      = "<span style='color: yellow;'>"
+    red         = "<span style='color: red;'>"
+    bold_red    = "<span style='color: red; font-weight: 800;'>"
+    reset       = "</span><br />"
 
     # Format strings
     format = "%(asctime)s - %(levelname)s at [%(module)s]: %(message)s"
