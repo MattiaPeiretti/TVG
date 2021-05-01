@@ -20,18 +20,22 @@ The GPIO librafy for python will be used to handle the mount.
 
 ### Settingshandler
 - [x] Create interface that reads settings template json file
-- [ ] Save settings to settings data file
-- [ ] Parse settings to make them easier to access from internal software api
-- [ ] Add dynamic settings limits feature
+- [x] Save settings to settings data file
+- [x] Parse settings to make them easier to access from internal software api
+- [ ] Add dynamic settings limits feature (limits change based on the capabilites of the current system)
 - [ ] Add feature to save configurations
 
-### LoggingW
+### Logging
 - [x] Get logger working
 - [x] Implement logging
 - [x] Create different formatter for file logger.
 - [x] Show logs in the UI
 - [x] Implement logs with sockets
-- [ ] Create independen log agent which emits sockets events with the logs data every second
+- [x] Create independen log agent which emits sockets events with the logs data every second
+
+### Internal 
+- [ ] Make the constants file into an actual class which gets loaded and prepares the data beforehand
+- [ ] Create a page and system to handle and start the different servers..
 
 ### Vision
 - [ ] Create webcam init routine
@@ -42,9 +46,11 @@ The GPIO librafy for python will be used to handle the mount.
 
 ### Motory system
 - [ ] Create fake motory system api for testing
+- [ ] Plan an encoding system for the different commands to send to the mount
+- [ ] Create a webserver for the motory system
 - [ ] Integrate with pilot console
 - [ ] Integrate keyboard input
-- [ ] Integrate planning
+- [ ] Integrate planning movements
 
 ### Host Machine UI
 - [ ] Create CLI setup system UI for host machine
