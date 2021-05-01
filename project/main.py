@@ -15,6 +15,7 @@ import logging, logging.config
 # Modules
 from project.settingsHandler import SettingsHandler
 import project.customFormatters as customFormatters
+import project.constants as constants
 
 # Setting python path
 sys.path.insert(0, os.path.abspath(".."))
@@ -39,7 +40,7 @@ logging.config.dictConfig({
     "file":{  
         "()": "logging.handlers.RotatingFileHandler",
         "formatter": "default",
-        "filename": "log.log",
+        "filename": f"{constants.LOG_STORE_PATH}/consoleOut.log",
         "maxBytes" : 1024,
         "backupCount" :0,
         "encoding": "utf8",
