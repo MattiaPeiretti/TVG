@@ -9,7 +9,7 @@ import json
 import os
 import logging
 
-ERROR_NOT_INITALIZED_PROPERLY_MGS = "Error: SettingsHandler not initialized properly!"
+ERROR_NOT_INITIALIZED_PROPERLY_MGS = "Error: SettingsHandler not initialized properly!"
 
 def load_json(file_path, custom_error="JSON file not found at: "):
     if not os.path.exists(file_path):                                                       # Checking whether the file exists
@@ -58,12 +58,12 @@ class SettingsHandler(object):
     def get_settings_template(self):
         if self.settings_template:
             return self.settings_template['sections']
-        raise Exception(ERROR_NOT_INITALIZED_PROPERLY_MGS)
+        raise Exception(ERROR_NOT_INITIALIZED_PROPERLY_MGS)
     
     def get_settings_data(self):
         if self.settings_data:
             return self.settings_data
-        raise Exception(ERROR_NOT_INITALIZED_PROPERLY_MGS)
+        raise Exception(ERROR_NOT_INITIALIZED_PROPERLY_MGS)
 
     # Settings Data
 
