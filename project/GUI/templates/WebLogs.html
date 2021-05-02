@@ -81,6 +81,7 @@
     // Connection closed
     socket.addEventListener('close', function (event) {
         console.log('Disconnected from the WS Server!')
+        webServerStatusLabel.innerHTML = "Offline.";
     });
 
     // Listen for messages
