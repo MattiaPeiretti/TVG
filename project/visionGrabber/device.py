@@ -11,7 +11,9 @@ import logging
 
 # Modules
 from project.settingsHandler import SettingsHandler
-import project.constants as constants
+from project.constants import Constants
+
+constants = Constants()
 
 settings_handler = SettingsHandler()
 class Device(object):
