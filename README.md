@@ -34,8 +34,9 @@ The GPIO librafy for python will be used to handle the mount.
 - [x] Create independen log agent which emits sockets events with the logs data every second
 
 ### Internal 
-- [ ] Make the constants file into an actual class which gets loaded and prepares the data beforehand
-- [ ] Create a page and system to handle and start the different servers..
+- [x] Make the constants file into an actual class which gets loaded and prepares the data beforehand
+- [x] Create a page and system to handle and start the different servers..
+- [ ] Create an interface to see what agents are running for the agentsHandler
 
 ### Vision
 - [ ] Create webcam init routine
