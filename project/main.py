@@ -13,12 +13,18 @@ import project.GUI.GUIServer as GUI
 import logging, logging.config
 
 # Modules
-from project.settingsHandler import SettingsHandler
 import project.customFormatters as customFormatters
-import project.constants as constants
+from project.settingsHandler import SettingsHandler
+from project.constants import Constants
+from project.agentsHandler import AgentsHanlder
+from project.weblogger.server import run_server
 
 # Setting python path
 sys.path.insert(0, os.path.abspath(".."))
+
+# Setting up the constants hanlder so that 
+# the dynamic constants are generated properly
+constants = Constants()
 
 # Quick Settings
 GUI_DEBUG = True
@@ -63,8 +69,14 @@ settings_handler.load_settings_template_file(SETTINGS_TEMPLATE_FILE_PATH)       
 SETTINGS_FILE_PATH = os.path.abspath("../data/settings/settingsData.json")                      # Settings data
 settings_handler.load_settings_data_file(SETTINGS_FILE_PATH)                                    # Loading data
 
+agents_handler = AgentsHanlder()
+
+agents_handler.push_agent(run_server, "WebLoggerSocketsServer")
+
+agents_handler.run_all()
 # Starting the GUI server
 # GUI.app.run(debug=GUI_DEBUG);                                                                 # Running the GUI server
+
 GUI.build_and_run_GUI_server(5000, GUI_DEBUG);                                                  # Running the GUI server
 logging.info("Launched GUI instance")
 
