@@ -22,22 +22,6 @@
         padding-right: 20px;
     }
 
-    .data-bar {
-        position: absolute;
-        bottom: 0;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-
-    .data-bar span {
-        display: inline-block;
-        border-left: 4px solid green;
-        padding-left: 6px;
-        padding-right: 12px;
-    }
 
     #webserver-status:before {
         content: "WebLogger Server Status: ";
@@ -73,15 +57,21 @@
     const socket = new WebSocket('ws://localhost:5002');
 
     // Connection opened
+    // Connection opened
     socket.addEventListener('open', function (event) {
         console.log('Connected to the WS Server!')
         webServerStatusLabel.innerHTML = "Connected.";
+        webServerStatusLabel.classList.add("green-border");
+        webServerStatusLabel.classList.remove("red-border");
+
     });
 
     // Connection closed
     socket.addEventListener('close', function (event) {
         console.log('Disconnected from the WS Server!')
         webServerStatusLabel.innerHTML = "Offline.";
+        webServerStatusLabel.classList.add("red-border");
+        webServerStatusLabel.classList.remove("green-border");
     });
 
     // Listen for messages
