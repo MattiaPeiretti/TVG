@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block title %} Agents Checkup {% endblock %}
+{% block content %}
+
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    #console {
+        position: absolute;
+        top: 0;
+        bottom: 30px;
+        left: 0;
+        right: 0;
+        overflow-y: scroll;
+        font-family: monospace, monospace;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #webserver-status:before {
+        content: "AgentsChecker Server Status: ";
+    }
+
+    #last-update:before {
+        content: "Last queried the server: ";
+    }
+
+    .console-container {
+        position: relative;
+        min-height: calc(100% - 56px);
+        height: auto !important;
+    }
+</style>
+
+<div class="console-container">
+    <div id="console">
+        <div><img src="/static/agent.svg"></div>
+    </div>
+    <div class="data-bar">
+        <span id="webserver-status">
+            Loading...
+        </span>
+        <span id="last-update">
+            Loading...
+        </span>
+    </div>
+</div>
+
+<script>
+    let webServerStatusLabel = document.getElementById("webserver-status");
+
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://localhost:5003');
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+        console.log('Connected to the WS Server!')
+        webServerStatusLabel.innerHTML = "Connected.";
+        webServerStatusLabel.classList.add("green-border");
+        webServerStatusLabel.classList.remove("red-border");
+
+    });
+
+    // Connection closed
+    socket.addEventListener('close', function (event) {
+        console.log('Disconnected from the WS Server!')
+        webServerStatusLabel.innerHTML = "Offline.";
+        notify("Server has gone offline!");
+        webServerStatusLabel.classList.add("red-border");
+        webServerStatusLabel.classList.remove("green-border");
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+        let consoleElement = document.getElementById("console");
+        consoleElement.innerHTML = JSON.parse(event.data)[0].name + " --> " + ((JSON.parse(event.data)[0].is_running == true) ? "Online" : "Offline");
+        consoleElement.scrollTop = consoleElement.scrollHeight;
+        console.log('Message from server ', JSON.parse(event.data)[0]);
+    });
+
+    // Send a msg to the websocket
+    const sendMsg = () => {
+        socket.send('Hello from Client2!');
+    }
+
+</script>
+{% endblock %}
