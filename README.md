@@ -1,8 +1,10 @@
 # TVG Telescope Virtual Guider
 
 A web-tool that allows real-time control of your telescope mount. It also allows path correction ad path planning.
-It can show enhanced real-time video feed thanks to the Webcam Extender Core. https://www.youtube.com/watch?v=MOvJCfLYAw8&t=4s
-
+It can show enhanced real-time video feed thanks to the Webcam Extender Core. https://youtu.be/MOvJCfLYAw8
+<center>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/MOvJCfLYAw8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
 ## Technologies
 Technologies in terms of hardware and software used by this project.
 
