@@ -33,12 +33,70 @@
         min-height: calc(100% - 56px);
         height: auto !important;
     }
+
+    #agents-container {
+        padding-top: 30px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .agent-container {
+        padding: 20px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .agent-container:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        transition: .1s;
+    }
+
+    .agent-icon {
+        width: 3em;
+    }
+
+    .status-dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .status-dot-red {
+        background-color: red;
+    }
+
+    .status-dot-green {
+        background-color: green;
+    }
 </style>
 
 <div class="console-container">
-    <div id="console">
-        <div><img src="/static/agent.svg"></div>
+
+    {% raw %}
+
+    <div id="agents-container" class="col-lg-6">
+        <div v-for="agent in agents" class="agent-container card flex-row">
+            <div class="agent-icon">
+                <img src="/static/agent.svg" alt="">
+            </div>
+            <span class="agent-name">{{agent.name}}</span>
+            <div class="agent-status">
+                <div v-if="!agent.is_running" title="Status: offline" class="status-dot status-dot-red">
+
+                </div>
+                <div v-if="agent.is_running" title="Status: online" class="status-dot status-dot-green">
+
+                </div>
+
+            </div>
+        </div>
     </div>
+
+    {% endraw %}
     <div class="data-bar">
         <span id="webserver-status">
             Loading...
@@ -53,6 +111,20 @@
     let webServerStatusLabel = document.getElementById("webserver-status");
 
     // Create WebSocket connection.
+    //const socket = new WebSocket('ws://localhost:5003');
+
+
+
+    // Listen for messages
+    // socket.addEventListener('message', function (event) {
+    //     // let consoleElement = document.getElementById("console");
+    //     // consoleElement.innerHTML = JSON.parse(event.data)[0].name + " --> " + ((JSON.parse(event.data)[0].is_running == true) ? "Online" : "Offline");
+    //     // consoleElement.scrollTop = consoleElement.scrollHeight;
+    //     console.log('Message from server ', JSON.parse(event.data)[0]);
+    // });
+
+    // Send a msg to the websocket
+
     const socket = new WebSocket('ws://localhost:5003');
 
     // Connection opened
@@ -73,18 +145,20 @@
         webServerStatusLabel.classList.remove("green-border");
     });
 
-    // Listen for messages
-    socket.addEventListener('message', function (event) {
-        let consoleElement = document.getElementById("console");
-        consoleElement.innerHTML = JSON.parse(event.data)[0].name + " --> " + ((JSON.parse(event.data)[0].is_running == true) ? "Online" : "Offline");
-        consoleElement.scrollTop = consoleElement.scrollHeight;
-        console.log('Message from server ', JSON.parse(event.data)[0]);
-    });
-
-    // Send a msg to the websocket
-    const sendMsg = () => {
-        socket.send('Hello from Client2!');
-    }
+    new Vue({
+        el: "#agents-container",
+        data: {
+            agents: [
+                "aa"
+            ]
+        },
+        mounted() {
+            socket.addEventListener('message', (event) => {
+                console.log(JSON.parse(event.data))
+                this.agents = JSON.parse(event.data);
+            });
+        }
+    })
 
 </script>
 {% endblock %}
