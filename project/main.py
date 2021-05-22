@@ -6,9 +6,14 @@
 # Written by Mattia Peiretti on 03/2021, https://mattiapeiretti.com
 # ---------------------------------------------------------------------
 
+# Setting python path
+
 # Libs
 import os
 import sys
+
+sys.path.insert(0, os.path.abspath(".."))
+
 import project.GUI.GUIServer as GUI
 import logging, logging.config
 
@@ -19,8 +24,6 @@ from project.constants import Constants
 from project.agentsHandler import AgentsHanlder
 from project.weblogger.server import run_server
 
-# Setting python path
-sys.path.insert(0, os.path.abspath(".."))
 
 # Setting up the constants hanlder so that
 # the dynamic constants are generated properly
